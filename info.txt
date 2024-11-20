@@ -1,0 +1,62 @@
+'address' - Columns: 1 (Facebook), 0 (Google), Not Present (Website)
+'city' - Columns: 3 (Facebook), 2 (Google), 4 (Website)
+'country_code' - Columns: 4 (Facebook), 3 (Google), 5 (Website)
+'country_name' - Columns: 5 (Facebook), 4 (Google), 6 (Website)
+'region_code' - Columns: 13 (Facebook), 10 (Google), 6 (Website)
+'region_name' - Columns: 14 (Facebook), 11 (Google), 7 (Website)
+'zip_code' - Columns: 15 (Facebook), 13 (Google), 14 (Website)
+
+
++-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+
+| Common Index|   Facebook   | Common Index|    Google    | Common Index|   Website    | Extra Index |   Facebook   | Extra Index |    Google    | Extra Index |   Website    |
++-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+
+|      0      |   'domain'   |      0      |   'address'  |      0      | 'root_domain'|      1      |  'address'   |      1      |   'category' |      1      | 'domain_suffix'|      2      | 'language'   |      2      | 'description'|
+|      1      |  'address'   |      1      |   'category' |      1      | 'domain_suffix'|      2      |  'city'      |      2      |   'city'     |      2      | 'main_city'   |      3      | 'legal_name' |      3      |   'email'    |
+|      2      | 'categories' |      2      |   'city'     |      2      |   'language' |      3      |  'country_code' |    3      | 'country_code'|      3      | 'main_country'|      4      | 'main_city'  |      4      |    'link'    |
+|      3      |   'city'     |      3      | 'country_code'|     3      |  'legal_name'|      4      | 'country_name'|      4      | 'country_name'|      4      | 'main_region' |      5      | 'main_country'|      5      |   'name'     |
+|      4      | 'country_code'|     4      |'country_name'|      4      | 'main_city'  |      5      |  'description'|     5      |  'name'      |      5      | 'phone'       |      6      | 'main_region'|      6      | 'page_type'  |
+|      5      |'country_name'|      5      | 'name'       |      5      |  'main_country'|     6      |  'email'     |     6      | 'phone_country_code'| 6 | 'region_code' |      7      | 'phone'      |      7      | 'phone_country_code' |
+|      6      |'description' |      6      | 'phone'      |      6      |  'main_region'|     7      |  'link'      |     7      | 'region_code' |      7      | 'region_name' |      8      | 'region_code'|      8      | 'region_name'|
+|      7      |   'email'    |      7      | 'phone_country_code'| 7 | 'main_country'|     8      |  'name'      |     8      | 'region_name' |      8      | 'zip_code'    |      9      | 'region_name'|      9      | 'zip_code'  |
+|      8      |   'link'     |      8      | 'raw_address'|       8      |  'site_name' |    10      |  'page_type' |    9      | 'text'        |      9      |               |     10      | 'zip_code'   |               |              |
+|      9      |   'name'     |      9      | 'raw_phone'  |       9      |  'tld'       |    11      |  'phone'     |    10     |               |     10      |               |     11      |              |               |              |
+|     10      | 'page_type'  |     10      | 'region_code'|      10     |  's_category'|    12      |  'phone_country_code' | 11 |               |     11      |               |     12      |              |               |              |
+|     11      |  'phone'     |     11      | 'region_name'|      11     |               |             |  'region_code'|    12     |               |     12      |               |     13      |              |               |              |
+|     12      |'phone_country_code'| 12 | 'text'       |      12     |               |             | 'region_name'|             |               |             |               |     14      |              |               |              |
+|     13      | 'region_code'|     13      | 'zip_code'   |      13     |               |             | 'zip_code'   |             |               |             |               |     15      |              |               |              |
+|     14      | 'region_name'|     14      | 'domain'     |      14     |               |             |              |             |               |             |               |             |              |               |              |
+|     15      | 'zip_code'   |     15      |              |             |               |             |              |             |               |             |               |             |              |               |              |
++-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+
+
+
+def print_single_row(file_path, row_index):
+    print(f"Printing row {row_index} from file: {file_path}")
+    with open(file_path, 'r', newline='', encoding='utf-8') as csvfile:
+        csvreader = csv.reader(csvfile)
+        current_row = 0
+        for row in csvreader:
+            if current_row == row_index:
+                print(row)  # Print the row if its index matches the desired row index
+                break
+            current_row += 1
+        else:
+            print(f"Row {row_index} not found in the file.")
+
+
+row 1: names
+column 0: domain(found in facebook at 0, google at 14, website_data at 0)
+column 1: address(found in facebook at 1, google at 0, for website_data it doesnt exist)
+column 2: name(found in facebook at 9, google at 6, website_data at 3)
+column 3: categories(found in facebook at 2, google at 1, website_data at 10)
+column 4: description(facebook 6, google 12, website_data at 9)
+column 5: link(facebook at 8, google doesnt exist, website_data at 8)
+column 6: phone(facebook 12 + 11, google 9, website_data 7)
+column 7: country(facebook 5, google 4, website_data 5)
+column 8: city(facebook 3, google 2, website_data 4)
+column 9: country_code(facebook 4, google 3, website_data doesnt exist)
+column 10: region(facebook 14, google 11, website_data 6)
+column 11: region_code(facebook 13, google 10, website_data doesnt exist)
+column 12: zip_code(facebook 15, google 13, website_data doesnt exist)
+column 13: email(facebook 7, google doesnt exist, website_data doesnt exist)
+column 14: page_type(facebook 8, google doesnt exist, website_data doesnt exist)
+column 15: language(facebook doesnt exist, google doesnt exist, website_data 2)
